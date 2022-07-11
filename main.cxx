@@ -168,9 +168,9 @@ static void scan_opt (int argc, char **argv) {
     static struct opt_str {
 	bool *flag;
 	char **value;
-	char *str;
-        char *defval; 
-	char *comment;
+	const char *str;
+    const char *defval;
+	const char *comment;
     } opt[] = {
 
 //      Add command options to this table:
@@ -239,7 +239,7 @@ static void scan_opt (int argc, char **argv) {
     };
     for (j = 0; j < (sizeof(opt)/sizeof(opt_str)); j++) {
 	if (opt[j].value != NULL) { 
- 	    *opt[j].value = opt[j].defval;
+ 	    *opt[j].value = (char*)opt[j].defval; //BRUTAL!
         }
 	if (opt[j].flag != NULL) { 
 	    *(opt[j].flag) = FALSE; // Switch off flags
@@ -274,7 +274,7 @@ static void scan_opt (int argc, char **argv) {
 	}
 	if (!found) { 
  	  Help:
-	    fprintf (stderr, "Pascal to C/C++ converter. Version "VERSION"\n"
+	    fprintf (stderr, "Pascal to C/C++ converter. Version " VERSION "\n"
 			     "Available options are:\n");
 
 	    for (j = 0; j < (sizeof(opt)/sizeof(opt_str)); j++ ) {
