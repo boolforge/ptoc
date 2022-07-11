@@ -5,7 +5,7 @@ void foo()
    real t;
    integer page_;
 
-   page_ = sizeof(page_);
+   page_ = sizeof_(page_);
    t = atan(get_time());
 }
 
