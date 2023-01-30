@@ -477,3 +477,5 @@ enum graphics_errors {
 #define KEY_SCR_LOCK	20
 
 #endif	/* __BGI_INCLUDED */
+
+#include "rotated.h"
