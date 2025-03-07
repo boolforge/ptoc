@@ -57,7 +57,7 @@ void scanner_input(char *file)
     FILE* f = fopen (file, "r");
 
     if (f == NULL) {
-	error("can't open input source file: %s", file);
+	error("can't open input source file: '%s'", file);
     }
     scanner.attach(file, f);
 }
@@ -342,7 +342,7 @@ uses          BEGIN(use); /* Turbo Pascal */
 		return 1;
 	    }
 	}
-	warning(line, pos, file_name, "can't include file %s", fname);
+	warning(line, pos, file_name, "can't include file '%s'", fname);
         curr_token = new token(dprintf("/*#include \"%s.h\"*/\n", yytext),
 	                       TKN_CMNT, line, pos);
     } else {
@@ -357,9 +357,8 @@ uses          BEGIN(use); /* Turbo Pascal */
 
 
 <use>.  {
-    error(line, pos, file_name, "unrecognized token: %s\n",
-		yytext);
-}
+          error(line, pos, file_name, "2.unrecognized token-%s\n", yytext);
+        }
 
 
 
@@ -397,16 +396,15 @@ uses          BEGIN(use); /* Turbo Pascal */
 	    return 1;
 	}
     }
-    warning(line, pos, file_name, "can't include file %s", fname);
+    warning(line, pos, file_name, "can't include file '%s'", fname);
     curr_token = new token(dprintf("/*#include \"%s\"*/", fname),
 	                   TKN_CMNT, line, pos);
     return 1;
 }
 
 <incl>.  {
-    error(line, pos, file_name, "unrecognized token: %s\n",
-		yytext);
-}
+            error(line, pos, file_name, "3.unrecognized token-%s\n",yytext);
+         }
 
 \{\$I[ \t]*[a-zA-Z0-9\.]+[ \t]*\} {
     char *fname = include_name (yytext+3);
@@ -432,7 +430,7 @@ uses          BEGIN(use); /* Turbo Pascal */
 	    return 1;
 	}
     }
-    warning(line, pos, file_name, "can't include file %s", fname);
+    warning(line, pos, file_name, "can't include file '%s'", fname);
     curr_token = new token(dprintf("/*#include \"%s\"*/", fname),
 	                   TKN_CMNT, line, pos);
     return 1;
@@ -582,9 +580,11 @@ uses          BEGIN(use); /* Turbo Pascal */
 
 [\n]         { return tkn(TKN_LN); }
 
-.            {
-                error(line, pos, file_name, "unrecognized token: %s\n",
-		      yytext);
+.       {
+                if(yytext[0]!=13) //Undefined token is often char(13) from Windows/DOS encoding
+                        fprintf(stderr,"\nTOKEN? %lu \n<%s>\n",(unsigned long)(yytext[0]),yytext);
+                return tkn(TKN_SPACE);//DEBUG?
+                //error(line, pos, file_name, "1.unrecognized token-%s\n",yytext);
              }
 
 %%

@@ -3,7 +3,7 @@ var
    t	: real;
    page	: integer;
 begin
-   page := size(page);
+   page := sizeof(page);
    t := arctan(time);
 end;
 

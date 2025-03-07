@@ -49,10 +49,10 @@ class tpexpr : public heap_object {
     virtual bool is_reference();
     virtual bool is_array();
 
-    tpexpr(int tp_tag, tpd_node* tp_tpd = NULL, char* tp_name = NULL) { 
+    tpexpr(int tp_tag, tpd_node* tp_tpd = NULL, const char* tp_name = NULL) {
          tag = tp_tag;
 	 tpd = tp_tpd;
-	 name = tp_name;
+	 name = const_cast<char*>(tp_name); //BRUTAL!
 	 flags = 0;
     }
 };

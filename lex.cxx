@@ -1984,7 +1984,7 @@ void scanner_input(char *file)
     FILE* f = fopen (file, "r");
 
     if (f == NULL) {
-	error("can't open input source file: %s", file);
+	error("can't open input source file: '%s'", file);
     }
     scanner.attach(file, f);
 }
@@ -2528,7 +2528,7 @@ YY_RULE_SETUP
 		return 1;
 	    }
 	}
-	warning(line, pos, file_name, "can't include file %s", fname);
+	warning(line, pos, file_name, "can't include file '%s'", fname);
         curr_token = new token(dprintf("/*#include \"%s.h\"*/\n", yytext),
 	                       TKN_CMNT, line, pos);
     } else {
@@ -2549,14 +2549,13 @@ case 8:
 YY_RULE_SETUP
 #line 359 "lex.l"
 {
-    error(line, pos, file_name, "unrecognized token: %s\n",
-		yytext);
-}
+          error(line, pos, file_name, "2.unrecognized token-%s\n", yytext);
+        }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 367 "lex.l"
+#line 366 "lex.l"
 {  /* eat the whitespace */
     char* p = yytext;
     while(*p != '\0') {
@@ -2566,7 +2565,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 373 "lex.l"
+#line 372 "lex.l"
 {
                   /* got the include file name */
     BEGIN(INITIAL);     // To leave include state
@@ -2594,7 +2593,7 @@ YY_RULE_SETUP
 	    return 1;
 	}
     }
-    warning(line, pos, file_name, "can't include file %s", fname);
+    warning(line, pos, file_name, "can't include file '%s'", fname);
     curr_token = new token(dprintf("/*#include \"%s\"*/", fname),
 	                   TKN_CMNT, line, pos);
     return 1;
@@ -2602,15 +2601,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 406 "lex.l"
+#line 405 "lex.l"
 {
-    error(line, pos, file_name, "unrecognized token: %s\n",
-		yytext);
-}
+            error(line, pos, file_name, "3.unrecognized token-%s\n",yytext);
+         }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 411 "lex.l"
+#line 409 "lex.l"
 {
     char *fname = include_name (yytext+3);
     char *xname;
@@ -2635,7 +2633,7 @@ YY_RULE_SETUP
 	    return 1;
 	}
     }
-    warning(line, pos, file_name, "can't include file %s", fname);
+    warning(line, pos, file_name, "can't include file '%s'", fname);
     curr_token = new token(dprintf("/*#include \"%s\"*/", fname),
 	                   TKN_CMNT, line, pos);
     return 1;
@@ -2644,7 +2642,7 @@ YY_RULE_SETUP
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(incl):
 case YY_STATE_EOF(use):
-#line 441 "lex.l"
+#line 439 "lex.l"
 {
     if (scanner.empty()) {
 	return -1;  // MAGIC ! (< 0 means end of files)
@@ -2658,162 +2656,162 @@ case YY_STATE_EOF(use):
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 452 "lex.l"
+#line 450 "lex.l"
 { return process_end_of_line_comment(); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 453 "lex.l"
+#line 451 "lex.l"
 { return process_comments(); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 454 "lex.l"
+#line 452 "lex.l"
 { return process_comments(); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 455 "lex.l"
+#line 453 "lex.l"
 { return process_comments(); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 457 "lex.l"
+#line 455 "lex.l"
 { return tkn(TKN_LPAR); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 458 "lex.l"
+#line 456 "lex.l"
 { return tkn(TKN_RPAR); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 459 "lex.l"
+#line 457 "lex.l"
 { text = "["; return tkn(TKN_LBR);  }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 460 "lex.l"
+#line 458 "lex.l"
 { text = "]"; return tkn(TKN_RBR);  }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 461 "lex.l"
+#line 459 "lex.l"
 { return tkn(TKN_LBR);  }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 462 "lex.l"
+#line 460 "lex.l"
 { return tkn(TKN_RBR);  }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 463 "lex.l"
+#line 461 "lex.l"
 { return tkn(TKN_MUL);  }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 464 "lex.l"
+#line 462 "lex.l"
 { return tkn(TKN_PLUS); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 465 "lex.l"
+#line 463 "lex.l"
 { return tkn(TKN_MINUS);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 466 "lex.l"
+#line 464 "lex.l"
 { return tkn(TKN_C_SHR); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 467 "lex.l"
+#line 465 "lex.l"
 { return tkn(TKN_C_SHL);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 468 "lex.l"
+#line 466 "lex.l"
 { return tkn(TKN_C_AND);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 469 "lex.l"
+#line 467 "lex.l"
 { return tkn(TKN_C_OR);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 470 "lex.l"
+#line 468 "lex.l"
 { return tkn(TKN_LETMUL);  }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 471 "lex.l"
+#line 469 "lex.l"
 { return tkn(TKN_LETADD); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 472 "lex.l"
+#line 470 "lex.l"
 { return tkn(TKN_LETSUB);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 473 "lex.l"
+#line 471 "lex.l"
 { return tkn(TKN_LETSHR); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 474 "lex.l"
+#line 472 "lex.l"
 { return tkn(TKN_LETSHL);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 475 "lex.l"
+#line 473 "lex.l"
 { return tkn(TKN_LETAND);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 476 "lex.l"
+#line 474 "lex.l"
 { return tkn(TKN_LETOR);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 477 "lex.l"
+#line 475 "lex.l"
 { return tkn(TKN_LETDIV);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 478 "lex.l"
+#line 476 "lex.l"
 { return tkn(TKN_C_NOT);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 479 "lex.l"
+#line 477 "lex.l"
 { return tkn(TKN_COMMA);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 480 "lex.l"
+#line 478 "lex.l"
 { return tkn(TKN_DOT);  }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 481 "lex.l"
+#line 479 "lex.l"
 { return tkn(TKN_DOTS); }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 482 "lex.l"
+#line 480 "lex.l"
 { return tkn(TKN_DIVR);  }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 483 "lex.l"
+#line 481 "lex.l"
 { return turbo_pascal ? tkn(TKN_ADDR) : tkn(TKN_HEAP); }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 484 "lex.l"
+#line 482 "lex.l"
 { if (turbo_pascal && !type_or_var_context
 		  && curr_token->tag != TKN_HEAP
                   && curr_token->tag != TKN_RBR && curr_token->tag != TKN_RPAR
@@ -2829,62 +2827,62 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 496 "lex.l"
+#line 494 "lex.l"
 { return tkn(TKN_LET);  }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 497 "lex.l"
+#line 495 "lex.l"
 { return tkn(TKN_COLON);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 498 "lex.l"
+#line 496 "lex.l"
 { return tkn(TKN_SEMICOLON); }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 499 "lex.l"
+#line 497 "lex.l"
 { return tkn(TKN_LE);  }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 500 "lex.l"
+#line 498 "lex.l"
 { return tkn(TKN_GE);  }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 501 "lex.l"
+#line 499 "lex.l"
 { return tkn(TKN_LT);  }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 502 "lex.l"
+#line 500 "lex.l"
 { return tkn(TKN_GT);  }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 503 "lex.l"
+#line 501 "lex.l"
 { return tkn(TKN_EQ);  }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 504 "lex.l"
+#line 502 "lex.l"
 { return tkn(TKN_NE);  }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 507 "lex.l"
+#line 505 "lex.l"
 { return tkn(TKN_RCONST); }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 508 "lex.l"
+#line 506 "lex.l"
 { return tkn(TKN_ICONST);  }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 510 "lex.l"
+#line 508 "lex.l"
 {
                char lc_buf[MAX_ID_LENGTH];
 	       char *src = yytext, *dst = lc_buf;
@@ -2956,26 +2954,28 @@ YY_RULE_SETUP
 case 57:
 /* rule 57 can match eol */
 YY_RULE_SETUP
-#line 579 "lex.l"
+#line 577 "lex.l"
 { return tkn(TKN_SCONST); }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 581 "lex.l"
+#line 579 "lex.l"
 { return tkn(TKN_SPACE); }
 	YY_BREAK
 case 59:
 /* rule 59 can match eol */
 YY_RULE_SETUP
-#line 583 "lex.l"
+#line 581 "lex.l"
 { return tkn(TKN_LN); }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 585 "lex.l"
+#line 583 "lex.l"
 {
-                error(line, pos, file_name, "unrecognized token: %s\n",
-		      yytext);
+                if(yytext[0]!=13) //Undefined token is often char(13) from Windows/DOS encoding
+                        fprintf(stderr,"\nTOKEN? %lu \n<%s>\n",(unsigned long)(yytext[0]),yytext);
+                return tkn(TKN_SPACE);//DEBUG?
+                //error(line, pos, file_name, "1.unrecognized token-%s\n",yytext);
              }
 	YY_BREAK
 case 61:
